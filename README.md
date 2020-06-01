@@ -26,8 +26,8 @@ python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml stage_
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_u.png" width="860"/>
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_v.png" width="860"/>
 
-Step 2. Sovle pose and reconstruct vehicle models from Step 1's result.
-Download the template_models, simplication_template_models, camera calib from here. Modify config.yaml to set resource and ouput path.
+Step 2. Sovle pose and reconstruct vehicle models from [Step 1's result](https://pan.baidu.com/s/1AieXOTvlRNGL4GQGdit83w)(password:rbpm).
+Download the template_models, simplication_template_models, camera calib from [here](https://pan.baidu.com/s/1DlEVKVbqcxzr9F3DxeqhXQ)(password:7ssf). Modify config.yaml to set resource and ouput path.
 ```
 python solve.py
 ```
