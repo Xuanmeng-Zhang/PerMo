@@ -31,6 +31,7 @@ Download the template_models, simplication_template_models, camera calib from he
 ```
 python solve.py
 ```
+<img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047.png" width="860"/>
 
 ## Dataset
 
