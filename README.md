@@ -42,8 +42,8 @@ python solve.py
 * This tool can be used to label the 6DOF pose and type of the vehicles in images. 
 * We have successfully used this tool on Kitti and Apollo.
 
-* Kitti dataset example
-![](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/006127.png)
+
+![Kitti labeled example](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/006127.png)
 
 
 ### Requirements
