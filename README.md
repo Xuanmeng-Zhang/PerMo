@@ -22,8 +22,12 @@ Step 1. Get the part segmentation, uv regression using our pre-trained model.
 ```
 python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml stage_part_uv.pkl [path to images] --output part_uv_res.pkl -v
 ```
+<img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_part.png" width="860"/>
+<img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_u.png" width="860"/>
+<img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_v.png" width="860"/>
+
 Step 2. Sovle pose and reconstruct vehicle models from Step 1's result.
-Down load the tamplate_models, simplication_tamplate_models, camera calib from here. Modify config.yaml to set resource and ouput path.
+Download the template_models, simplication_template_models, camera calib from here. Modify config.yaml to set resource and ouput path.
 ```
 python solve.py
 ```
