@@ -43,7 +43,7 @@ python solve.py
 * We have successfully used this tool on Kitti and Apollo.
 
 * Kitti dataset example
-![](https://github.com/SA2020PerMo/PerMo/blob/master/projects/3D_Tool/vis/006127.png)
+![](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/006127.png)
 
 
 ### Requirements
@@ -63,7 +63,7 @@ python solve.py
 * The label results are under /label_result.
 * The camera information are under /calib.
 * We provide 28 car models, which are under /models.
-![](https://github.com/SA2020PerMo/PerMo/blob/master/projects/3D_Tool/vis/tool2.png)
+![](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/tool2.png)
 
 ### Kitti Label Results
 
