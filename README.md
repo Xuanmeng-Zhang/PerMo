@@ -1,16 +1,5 @@
 # PerMo
 
-## Table of Content
-- [PerMo](#permo)
-  - [Table of Content](#table-of-content)
-  - [Network & 3D reconstruction](#network & 3d-reconstruction)
-  - [Dataset](#dataset)
-  - [Labelling Tool](#labelling-tool)
-    - [Description](#description)
-    - [Requirements](#requirements)
-    - [Usage](#usage)
-    - [Kitti Label Results](#kitti-label-results)
-
 ## Network & 3D reconstruction
 ### Requirements
 * Python ≥ 3.6, PyTorch ≥ 1.4
