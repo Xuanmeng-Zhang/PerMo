@@ -7,7 +7,7 @@
 * [detectron2](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md)
 
 ### Usage
-Step 1. Get the part segmentation, uv regression using our pre-trained model.
+Step 1. Get the part segmentation, uv regression using our [pre-trained model](https://drive.google.com/file/d/1qsuVn1J4E3XJhrj9ijfjgm_1H1TToaM2/view?usp=sharing).
 ```
 python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml stage_part_uv.pkl [path to images] --output part_uv_res.pkl -v
 ```
@@ -15,8 +15,8 @@ python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml stage_
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_u.png" width="860"/>
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_v.png" width="860"/>
 
-Step 2. Sovle pose and reconstruct vehicle models from [Step 1's result](https://pan.baidu.com/s/1AieXOTvlRNGL4GQGdit83w)(password:rbpm).
-Download the template_models, simplication_template_models, camera calib from [here](https://pan.baidu.com/s/1DlEVKVbqcxzr9F3DxeqhXQ)(password:7ssf). Modify config.yaml to set resource and ouput path.
+Step 2. Sovle pose and reconstruct vehicle models from [Step 1's result](https://drive.google.com/file/d/1-3phQ23taaeO3mpo3z0DNAuMs60d40mI/view?usp=sharing).
+Download the [template_models](https://drive.google.com/file/d/10o8a_TQo3633ArHikg0Pgkzb-ZJNfw-e/view?usp=sharing), [simplication_template_models](https://drive.google.com/file/d/1FC685JatxTlHmRwtnItfEkSZLWs926Ut/view?usp=sharing), [camera calib](https://drive.google.com/file/d/1VmX_S3jCYnfuj8CLKuv6X2x1tZ5IiB6q/view?usp=sharing). Modify config.yaml to set resource and ouput path.
 ```
 python solve.py
 ```
@@ -54,8 +54,6 @@ python solve.py
 * We provide 28 car models, which are under /models.
 ![](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/tool2.png)
 
-### Kitti Label Results
 
-The kitti label results can be download at [BaiduNetdisk](https://pan.baidu.com/s/1HnoZ3AAf1-xeFT7uTs-zLg)(password:330b)
 
 
