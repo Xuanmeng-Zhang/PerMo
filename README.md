@@ -24,6 +24,8 @@ python solve.py
 
 ## Dataset
 We use 28 industrial grade vehicle CAD models(including five vehicle classes: coupe, hatchback, notchback, SUV, MPV) to label and fit KITTI training dataset which contains 6871 images and 33747 car instances in total. We can generate instance segmentation, part-level segmentation and uv coordinates. Part of our annotations can be download at [here](https://drive.google.com/file/d/1zKTJbnANpIdLA3MXNz_ePHWYNXuVzPET/view?usp=sharing)
+![Kitti labeled example](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/006127.png)
+
 ## Labelling Tool
 
 ### Description
@@ -32,7 +34,6 @@ We use 28 industrial grade vehicle CAD models(including five vehicle classes: co
 * We have successfully used this tool on Kitti and Apollo.
 
 
-![Kitti labeled example](https://github.com/SA2020PerMo/PerMo/blob/master/3D_Tool/vis/006127.png)
 
 
 ### Requirements
