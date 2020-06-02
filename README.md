@@ -23,7 +23,7 @@ python solve.py
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047.png" width="860"/>
 
 ## Dataset
-We use 28 industrial grade vehicle CAD models(including five vehicle classes: coupe, hatchback, notchback, SUV, MPV) to label and fit KITTI training dataset which contains 6871 images and 33747 car instances in total. We can generate instance segmentation, part-level segmentation and uv coordinates. Part of our annotations can be download at here[https://drive.google.com/file/d/1zKTJbnANpIdLA3MXNz_ePHWYNXuVzPET/view?usp=sharing]
+We use 28 industrial grade vehicle CAD models(including five vehicle classes: coupe, hatchback, notchback, SUV, MPV) to label and fit KITTI training dataset which contains 6871 images and 33747 car instances in total. We can generate instance segmentation, part-level segmentation and uv coordinates. Part of our annotations can be download at [here](https://drive.google.com/file/d/1zKTJbnANpIdLA3MXNz_ePHWYNXuVzPET/view?usp=sharing)
 ## Labelling Tool
 
 ### Description
