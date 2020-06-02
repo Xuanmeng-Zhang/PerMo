@@ -9,7 +9,7 @@
 ### Usage
 Step 1. Get the part segmentation, uv regression using our [pre-trained model](https://drive.google.com/file/d/1qsuVn1J4E3XJhrj9ijfjgm_1H1TToaM2/view?usp=sharing).
 ```
-python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml stage_part_uv.pkl [path to images] --output part_uv_res.pkl -v
+python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml kitti_3d.pkl [path to images] --output stage_1_res.pkl -v
 ```
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_part.png" width="860"/>
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_u.png" width="860"/>
