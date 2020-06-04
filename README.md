@@ -11,6 +11,10 @@ Step 1. Get the part segmentation, uv regression using our [pre-trained model](h
 ```
 python apply_net.py dump configs/densepose_rcnn_R_101_FPN_DL_WC2_s1x.yaml kitti3d.pth [path to images] --output stage_1_res.pkl -v
 ```
+To vis stage_1_res.pkl, modify config.yaml to set input(input_image_dir, stage1_network_res) and ouput path.
+```
+python vis_pkl.py 
+```
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_part.png" width="860"/>
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_u.png" width="860"/>
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_v.png" width="860"/>
