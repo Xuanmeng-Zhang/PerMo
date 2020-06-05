@@ -48,8 +48,6 @@ def mk_res_dir(cfg):
         os.makedirs(cfg['uv_reg_output_dir'])
     if not os.path.exists(cfg['re_render_ouput_dir']):
         os.makedirs(cfg['re_render_ouput_dir'])
-    if not os.path.exists(cfg['pos_res_output_dir']):
-        os.makedirs(cfg['pos_res_output_dir'])
     if not os.path.exists(cfg['rencon_output_dir']):
         os.makedirs(cfg['rencon_output_dir'])
 
@@ -109,10 +107,7 @@ def sovle_pose(data, test_dir, pcs, car_names, part_bboxes, spcs, face_indexs, t
             
             save_models(best_shape, others_str, instance_id, img_name, cfg['rencon_output_dir'])
             [bbox1, bbox2, bbox3, bbox4, height, width, length, x, y, z, b, s] = detection_res
-            with open(os.path.join(cfg['pos_res_output_dir'], img_name.split('.')[0] + '.txt'), 'a') as f:
-                    f.write('Car -1 -1 -10 ' + str(float(bbox1)) + ' ' + str(float(bbox2)) + ' ' + str(float(bbox3)) + ' ' + str(float(bbox4)) + ' ' + 
-                    str(height) + ' ' + str(width) + ' ' + str(length) + ' ' + 
-                    str(x) + ' ' + str(y) + ' ' + str(z) + ' ' + str(b) + ' ' + str(float(s)) + '\n')
+            
             
         cv2.imwrite(os.path.join(cfg['re_render_ouput_dir'], img_name), img)
         cv2.imwrite(os.path.join(cfg['part_seg_output_dir'], img_name.split('.')[0] + '_part.png'), img_part)
