@@ -1,12 +1,12 @@
 
 
 # pose solve
-input_image_dir: '/home/beta/SG2020/kitti_3d/test_set/test_image/'
-stage1_network_res: '/home/beta/SG2020/DENSEPOSE2/detectron2/projects/DensePose/kitti_test.pkl'
-calib_dir: '/home/beta/SG2020/kitti_3d/test_set/calib/'
-temaplate_models_dir: '/home/beta/SG2020/kitti_3d/train_set/new_kitti_model/'
-simplification_temaplate_models_dir: '/home/beta/SG2020/kitti_3d/train_set/kitti_simplification_models/kitti_simplification_models/'
-texture_path: '/home/beta/SG2020/kitti_3d/train_set/new_kitti_model/Template18_new.PNG'
+input_image_dir: '/home/beta/SA2020/kitti_3d/test_set/test_image/'
+stage1_network_res: '/home/beta/SA2020/DENSEPOSE2/detectron2/projects/DensePose/kitti_test.pkl'
+calib_dir: '/home/beta/SA2020/kitti_3d/test_set/calib/'
+temaplate_models_dir: '/home/beta/SA2020/kitti_3d/train_set/new_kitti_model/'
+simplification_temaplate_models_dir: '/home/beta/SA2020/kitti_3d/train_set/kitti_simplification_models/kitti_simplification_models/'
+texture_path: '/home/beta/SA2020/kitti_3d/train_set/new_kitti_model/Template18_new.PNG'
 
 part_seg_output_dir: './res/part_seg/'
 uv_reg_output_dir: './res/uv/'
