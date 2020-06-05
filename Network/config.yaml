@@ -11,7 +11,6 @@ texture_path: '/home/beta/SG2020/kitti_3d/train_set/new_kitti_model/Template18_n
 part_seg_output_dir: './res/part_seg/'
 uv_reg_output_dir: './res/uv/'
 re_render_ouput_dir: './res/re_render/'
-pos_res_output_dir: './res/pose_res/'
 rencon_output_dir: './res/reconstruction/'
 
 num_of_workers: 1
