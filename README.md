@@ -20,7 +20,7 @@ python vis_pkl.py
 <img src="https://github.com/SA2020PerMo/PerMo/blob/master/vis/004047_v.png" width="860"/>
 
 Step 2. Sovle pose and reconstruct vehicle models from [Step 1's result](https://drive.google.com/file/d/1-3phQ23taaeO3mpo3z0DNAuMs60d40mI/view?usp=sharing).
-Download the [template_models](https://drive.google.com/file/d/10o8a_TQo3633ArHikg0Pgkzb-ZJNfw-e/view?usp=sharing), [simplication_template_models](https://drive.google.com/file/d/1FC685JatxTlHmRwtnItfEkSZLWs926Ut/view?usp=sharing), [camera calib](https://drive.google.com/file/d/1VmX_S3jCYnfuj8CLKuv6X2x1tZ5IiB6q/view?usp=sharing). Modify config.yaml to set resource and ouput path.
+Download the [template_models](https://drive.google.com/file/d/10o8a_TQo3633ArHikg0Pgkzb-ZJNfw-e/view?usp=sharing), [simplication_template_models](https://drive.google.com/file/d/1FC685JatxTlHmRwtnItfEkSZLWs926Ut/view?usp=sharing), [camera calib](https://drive.google.com/file/d/1VmX_S3jCYnfuj8CLKuv6X2x1tZ5IiB6q/view?usp=sharing), [skp pre-trained model](https://drive.google.com/file/d/1H5Quk4s8kq2BEZLBBahmwRbetxu0qUO8/view?usp=sharing) and [estimated depth map](https://drive.google.com/file/d/1LVsyKJ4PLVMk-ECqQkMqE35ejPn0pBwS/view?usp=sharing). Modify config.yaml to set resource and ouput path.
 ```
 python solve.py
 ```
