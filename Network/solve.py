@@ -1,15 +1,20 @@
 import pickle
 from densepose.structures import DensePoseResult
 from recon.recon import estimate_6Dof_pose_with_partiou, get_camera_mat, papare_sim_models, get_color, papare_for_reconstruction, convert_part_uv_to_global_uv, flann_match_keypoints,get_pc_from_depth, get_texture_part_color, convert_part_uv_to_global_uv_sparse, estimate_6Dof_pose, papare_template_vertexs, estimate_6Dof_pose_multiprocess, get_camera_mat,vis_part, append_uv_map
+import math
 import cv2
 import os
 import time
 from multiprocessing import Process
 import numpy as np
 from tqdm import tqdm
-from recon.image_editing import get_car_name
 import argparse
 import yaml
+from skp_rpn.skp_3d_detnet import SKP3DDetNet
+from skp_rpn.utils import get_kp_matrix, get_kp_uv, flann_match_structurekeypoints, convert_part_uv_to_global_uv_for_skp
+import torch
+from torchvision.transforms import functional as F
+
 
 def load_yaml_cfg(cfg):
 	with open(cfg,'r',encoding='utf-8') as f:
@@ -48,20 +53,43 @@ def mk_res_dir(cfg):
         os.makedirs(cfg['uv_reg_output_dir'])
     if not os.path.exists(cfg['re_render_ouput_dir']):
         os.makedirs(cfg['re_render_ouput_dir'])
+    if not os.path.exists(cfg['pos_res_output_dir']):
+        os.makedirs(cfg['pos_res_output_dir'])
     if not os.path.exists(cfg['rencon_output_dir']):
         os.makedirs(cfg['rencon_output_dir'])
 
-def sovle_pose(data, test_dir, pcs, car_names, part_bboxes, spcs, face_indexs, t_us, t_vs, others_str, cfg):
+def get_pose_from_skpnet(skp_model, img_name, uv, uv_in_raw, kp_uv, depth_img):
+    us, vs = flann_match_structurekeypoints(uv, kp_uv, uv_in_raw)
+    kp_mat = get_kp_matrix(us, vs, depth_img)
+
+    kp_mat = kp_mat.astype('float32')
+    kp_mat = F.to_tensor(kp_mat).to('cuda')
+    kp_mat = torch.unsqueeze(kp_mat, 0)
+    _, scores, positions, sizes = skp_model(kp_mat)
+    positions = torch.squeeze(positions[0].cpu())
+    score = torch.squeeze(scores[0].cpu())
+    sizes = torch.squeeze(sizes[0].cpu())
+    x, y, z, b = float(positions[0]), float(positions[1]), float(positions[2]), float(positions[3])
+    height, width, length = float(sizes[0]), float(sizes[1]), float(sizes[2])
+    score =  1.0/(math.exp(-float(score)) + 1.0)
+    return x, y, z, height, width, length, b, score
+
+def sovle_pose_and_shape(data, skp_model, pcs, car_names, part_bboxes, spcs, face_indexs, t_us, t_vs, kp_uv, others_str, cfg):
     for img_id in tqdm(range(0, len(data))):
         target_num = len(data[img_id]['pred_boxes_XYXY'])
         start = time.time()
         img_name = os.path.basename(data[img_id]['file_name'])
-    
-        img = cv2.imread(test_dir + img_name)
+        depth_img = cv2.imread(os.path.join(cfg['est_depth_dir'], img_name))
+        img = cv2.imread(os.path.join(cfg['input_image_dir'], img_name))
+        if depth_img is None or img is None:
+            continue
+        depth_img = cv2.resize(depth_img, (img.shape[1], img.shape[0]))
+        depth_img = depth_img[:, :, 0]
+        
         img_part = np.copy(img)
         img_u = np.copy(img)
         img_v = np.copy(img)
-        # camera_mat = get_camera_mat(img_name)
+
         for instance_id in range(target_num):
             bbox_xyxy = data[img_id]['pred_boxes_XYXY'][instance_id]
             # pre_class = data[img_id]['pred_classes'][instance_id]
@@ -81,6 +109,7 @@ def sovle_pose(data, test_dir, pcs, car_names, part_bboxes, spcs, face_indexs, t
             
             # for each pix in car instance, convert it to uv(coordinate in texute_map) and uv_in_raw(coordinate in input image)
             uv, uv_in_raw = convert_part_uv_to_global_uv(u_map, v_map, part_img, part_bboxes)
+            
             uv_in_raw[:, 0] += int(bbox_xyxy[0])
             uv_in_raw[:, 1] += int(bbox_xyxy[1])
 
@@ -101,13 +130,17 @@ def sovle_pose(data, test_dir, pcs, car_names, part_bboxes, spcs, face_indexs, t
                 continue
             camera_mat = get_camera_mat(img_name, cfg['calib_dir'])
 
-            
-            #　shapes.append(pc)
             img, detection_res, best_shape = estimate_6Dof_pose_with_partiou(vertexs_index, np.array(new_uv_in_raw), img, pcs, car_names, bbox_xyxy, img_name, spcs, face_indexs, t_us, t_vs, part_mask, part_bboxes, camera_mat)
-            
-            save_models(best_shape, others_str, instance_id, img_name, cfg['rencon_output_dir'])
             [bbox1, bbox2, bbox3, bbox4, height, width, length, x, y, z, b, s] = detection_res
-            
+            save_models(best_shape, others_str, instance_id, img_name, cfg['rencon_output_dir'])
+
+            uv, uv_in_raw = convert_part_uv_to_global_uv_for_skp(u_map, v_map, part_img, part_bboxes, bbox_xyxy)
+            x, y, z, height, width, length, b, s = get_pose_from_skpnet(skp_model, img_name, uv, uv_in_raw, kp_uv, depth_img)
+
+            with open(os.path.join(cfg['pos_res_output_dir'], img_name.split('.')[0] + '.txt'), 'a') as f:
+                    f.write('Car -1 -1 -10 ' + str(float(bbox1)) + ' ' + str(float(bbox2)) + ' ' + str(float(bbox3)) + ' ' + str(float(bbox4)) + ' ' + 
+                    str(height) + ' ' + str(width) + ' ' + str(length) + ' ' + 
+                    str(x) + ' ' + str(y) + ' ' + str(z) + ' ' + str(b) + ' ' + str(float(s)) + '\n')
             
         cv2.imwrite(os.path.join(cfg['re_render_ouput_dir'], img_name), img)
         cv2.imwrite(os.path.join(cfg['part_seg_output_dir'], img_name.split('.')[0] + '_part.png'), img_part)
@@ -132,35 +165,9 @@ mk_res_dir(cfg)
 f = open(cfg['stage1_network_res'], 'rb')
 data = pickle.load(f)
 
-
-
-#　sovle_pose(data, test_dir, pcs, car_names, part_bboxes)
-
-## sovle pose and shape multiprocess
-num_of_worker = 1
-num_per_worker = len(data) // num_of_worker
-if len(data) < num_of_worker:
-    num_of_worker = len(data)
-    num_per_worker = 1
-processes = []
-for i in range(num_of_worker):
-    if i == num_of_worker - 1:
-        p = Process(target=sovle_pose, args=(
-        data[i * num_per_worker:], 
-        test_dir, 
-        pcs, 
-        car_names,
-        part_bboxes, spcs, face_indexs, t_us, t_vs, model_face_uv_str, cfg))
-    else:
-        p = Process(target=sovle_pose, args=(
-        data[i * num_per_worker:(i + 1) * num_per_worker], 
-        test_dir, 
-        pcs, 
-        car_names,
-        part_bboxes, spcs, face_indexs, t_us, t_vs, model_face_uv_str, cfg))
-    p.start()
-    processes.append(p)
-for p in processes:
-    p.join()
-
-
+skp_model = SKP3DDetNet()
+skp_model.load_state_dict(torch.load(cfg['skp_model_path'])['model'])
+skp_model.to('cuda')
+skp_model.eval()
+kp_uv = get_kp_uv(target_uv)
+sovle_pose_and_shape(data, skp_model, pcs, car_names, part_bboxes, spcs, face_indexs, t_us, t_vs, kp_uv, model_face_uv_str, cfg)
